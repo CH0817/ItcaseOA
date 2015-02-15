@@ -4,21 +4,23 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="cn.itcast.oa.domain">
-
 	<class name="Role" table="itcast_role">
 		<id name="id">
-            <generator class="native"/>
+			<generator class="native" />
 		</id>
 		<property name="name" />
 		<property name="description" />
-		
-		
-		<!-- users属性，本类与User的多对多 -->
+
+		<!-- users屬性，本類與User的多對多 -->
 		<set name="users" table="itcast_user_role">
 			<key column="roleId"></key>
 			<many-to-many class="User" column="userId"></many-to-many>
 		</set>
-		
+
+		<!-- privileges屬性，本類與Privilege的多對多 -->
+		<set name="privileges" table="itcast_privilege_role">
+			<key column="privilegeId"></key>
+			<many-to-many class="Privilege" column="roleId"></many-to-many>
+		</set>
 	</class>
-	
 </hibernate-mapping>

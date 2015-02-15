@@ -4,7 +4,6 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="cn.itcast.oa.domain">
-
 	<class name="User" table="itcast_user">
 		<id name="id">
 			<generator class="native" />
@@ -17,18 +16,14 @@
 		<property name="email" />
 		<property name="description" />
 
-
-		<!-- department属性，本类与Department的多对一 -->
+		<!-- department屬性，本類與Department的多對一 -->
 		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
 
-
-		<!-- roles属性，本类与Role的多对多 -->
+		<!-- roles屬性，本類與Role的多對多 -->
 		<set name="roles" table="itcast_user_role" order-by="roleId ASC">
 			<key column="userId"></key>
 			<many-to-many class="Role" column="roleId"></many-to-many>
 		</set>
-
-
 	</class>
-
 </hibernate-mapping>
+

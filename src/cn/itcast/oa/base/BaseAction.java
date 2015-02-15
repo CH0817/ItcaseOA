@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import javax.annotation.Resource;
 
 import cn.itcast.oa.service.DepartmentService;
+import cn.itcast.oa.service.PrivilegeService;
 import cn.itcast.oa.service.RoleService;
 import cn.itcast.oa.service.UserService;
 
@@ -43,4 +44,6 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	protected RoleService roleService;
 	@Resource
 	protected UserService userService;
+	@Resource
+	protected PrivilegeService privilegeService;
 }

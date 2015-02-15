@@ -1,11 +1,13 @@
 package cn.itcast.oa.view.action;
 
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.itcast.oa.base.BaseAction;
+import cn.itcast.oa.domain.Privilege;
 import cn.itcast.oa.domain.Role;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -15,6 +17,8 @@ import com.opensymphony.xwork2.ActionContext;
 public class RoleAction extends BaseAction<Role> {
 
 	private static final long serialVersionUID = 1L;
+
+	private Long[] privilegeIds;
 
 	/** 列表 */
 	public String list() throws Exception {
@@ -71,6 +75,49 @@ public class RoleAction extends BaseAction<Role> {
 		roleService.update(role);
 
 		return "toList";
+	}
+
+	/** 設置權限頁面 */
+	public String setPrivilegeUI() throws Exception {
+		// 準備回顯的數據
+		Role role = roleService.getById(model.getId());
+		ActionContext.getContext().getValueStack().push(role);
+		if (role.getPrivileges() != null) {
+			privilegeIds = new Long[role.getPrivileges().size()];
+			int index = 0;
+			for (Privilege privilege : role.getPrivileges()) {
+				privilegeIds[index++] = privilege.getId();
+			}
+		}
+		
+		//準備數據privilegeList
+		List<Privilege> privilegeList = privilegeService.findAll();
+		ActionContext.getContext().put("privilegeList", privilegeList);
+
+		return "setPrivilegeUI";
+	}
+
+	/** 設置權限 */
+	public String setPrivilege() throws Exception {
+		// 1，從資料庫中獲取原物件
+		Role role = roleService.getById(model.getId());
+
+		// 2，設置要修改的屬性
+		List<Privilege> privilegeList = privilegeService.getByIds(privilegeIds);
+		role.setPrivileges(new HashSet<Privilege>(privilegeList));
+
+		// 3，更新到資料庫
+		roleService.update(role);
+
+		return "toList";
+	}
+
+	public Long[] getPrivilegeIds() {
+		return privilegeIds;
+	}
+
+	public void setPrivilegeIds(Long[] privilegeIds) {
+		this.privilegeIds = privilegeIds;
 	}
 
 }
