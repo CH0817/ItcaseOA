@@ -4,7 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 用户
+ * 用戶
+ * 
  * @author tyg
  * 
  */
@@ -13,13 +14,13 @@ public class User {
 	private Department department;
 	private Set<Role> roles = new HashSet<Role>();
 
-	private String loginName; // 登录名
-	private String password; // 密码
-	private String name; // 真实姓名
-	private String gender; // 性别
-	private String phoneNumber; // 电话号码
-	private String email; // 电子邮件
-	private String description; // 说明
+	private String loginName; // 登錄名
+	private String password; // 密碼
+	private String name; // 真實姓名
+	private String gender; // 性別
+	private String phoneNumber; // 電話號碼
+	private String email; // 電子郵件
+	private String description; // 說明
 
 	public Long getId() {
 		return id;

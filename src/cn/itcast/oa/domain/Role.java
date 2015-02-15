@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 岗位
+ * 崗位
  * 
  * @author tyg
  * 

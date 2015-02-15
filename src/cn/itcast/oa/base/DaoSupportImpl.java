@@ -1,21 +1,23 @@
 package cn.itcast.oa.base;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SuppressWarnings("unchecked")
-public abstract class BaseDaoImpl<T> implements BaseDao<T> {
-
+public class DaoSupportImpl<T> implements DaoSupport<T> {
 	@Resource
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
 	private Class<T> clazz;
 
-	public BaseDaoImpl() {
+	public DaoSupportImpl() {
 		// 使用反射技術得到T的真實類型
 		ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass(); // 獲取當前new的對象的 泛型的父類 類型
 		this.clazz = (Class<T>) pt.getActualTypeArguments()[0]; // 獲取第一個類型參數的真實類型
@@ -55,10 +57,14 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	public List<T> getByIds(Long[] ids) {
-		return getSession().createQuery(//
-		        "FROM User WHERE id IN (:ids)")//
-		        .setParameterList("ids", ids)//
-		        .list();
+		if (ids == null || ids.length <= 0) {
+			return Collections.EMPTY_LIST;
+		} else {
+			return getSession().createQuery(//
+			        "FROM " + clazz.getSimpleName() + " WHERE id IN (:ids)")//
+			        .setParameterList("ids", ids)//
+			        .list();
+		}
 	}
 
 	public List<T> findAll() {
@@ -66,5 +72,4 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		        "FROM " + clazz.getSimpleName())//
 		        .list();
 	}
-
 }

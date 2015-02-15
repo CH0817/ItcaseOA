@@ -16,5 +16,23 @@ public interface DepartmentService {
 
 	void update(Department department);
 
+	/**
+	 * 查詢頂級部門列表
+	 * 
+	 * @author Rex
+	 *
+	 * @return
+	 */
+	List<Department> findTopList();
+
+	/**
+	 * 查詢子部門列表
+	 * 
+	 * @author Rex
+	 *
+	 * @param parentId
+	 * @return
+	 */
+	List<Department> findChildren(Long parentId);
 
 }

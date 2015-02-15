@@ -2,8 +2,7 @@ package cn.itcast.oa.base;
 
 import java.util.List;
 
-public interface BaseDao<T> {
-
+public interface DaoSupport<T> {
 	/**
 	 * 保存實體
 	 * 
@@ -47,5 +46,4 @@ public interface BaseDao<T> {
 	 * @return
 	 */
 	List<T> findAll();
-
 }
