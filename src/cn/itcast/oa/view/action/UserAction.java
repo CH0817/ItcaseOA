@@ -121,6 +121,30 @@ public class UserAction extends BaseAction<User> {
 		return "toList";
 	}
 
+	/** 登入頁面 */
+	public String loginUI() {
+		return "loginUI";
+	}
+
+	/** 登入 */
+	public String login() {
+		User user = userService.findByLoginNameAndPassword(model.getLoginName(), model.getPassword());
+		if (user == null) {
+			addFieldError("login", "用戶名或密碼錯誤");
+			return "loginUI";
+		} else {
+			// 登入用戶
+			ActionContext.getContext().getSession().put("user", user);
+			return "toIndex";
+		}
+	}
+
+	/** 註銷 */
+	public String logout() {
+		ActionContext.getContext().getSession().remove("user");
+		return "logout";
+	}
+
 	public Long getDepartmentId() {
 		return departmentId;
 	}
