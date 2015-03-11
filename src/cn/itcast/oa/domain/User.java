@@ -49,6 +49,41 @@ public class User {
 	}
 
 	/**
+	 * 判斷本用戶是否有指定Url的權限
+	 * 
+	 * @author Rex
+	 *
+	 * @param privUrl
+	 * @return
+	 */
+	public boolean hasPrivilegeByUrl(String privUrl) {
+		// 超級管理員有所有權限
+		if (isAdmin()) {
+			return true;
+		}
+
+		// 去掉後面的參數
+		int pos = privUrl.indexOf("?");
+		if (pos > -1) {
+			privUrl = privUrl.substring(0, pos);
+		}
+		// 去掉UI後綴
+		if (privUrl.endsWith("UI")) {
+			privUrl = privUrl.substring(0, privUrl.length() - 2);
+		}
+
+		// 普通用戶要判斷是否有權限
+		for (Role role : roles) {
+			for (Privilege priv : role.getPrivileges()) {
+				if (StringUtils.equals(privUrl, priv.getUrl())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * 判斷本用戶是否為超級管理員
 	 * 
 	 * @author Rex
