@@ -11,6 +11,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext*.xml</param-value>
 	</context-param>
+	<!-- 用於初始化的Listener一定要配在Spring的ContextLoaderListener後面，因為需要Spring的容器對象 -->
+	<!-- 取得頂級權限List -->
+	<listener>
+		<listener-class>cn.itcast.oa.util.InitListener</listener-class>
+	</listener>
 	<!-- 配置Spring的用於解決懶加載(lazy)問題的過濾器 -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>

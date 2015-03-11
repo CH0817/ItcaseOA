@@ -20,7 +20,7 @@
 		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
 
 		<!-- roles屬性，本類與Role的多對多 -->
-		<set name="roles" table="itcast_user_role" order-by="roleId ASC">
+		<set name="roles" table="itcast_user_role" order-by="roleId ASC" lazy="false">
 			<key column="userId"></key>
 			<many-to-many class="Role" column="roleId"></many-to-many>
 		</set>
