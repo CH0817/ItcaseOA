@@ -1,9 +1,13 @@
 package cn.itcast.oa.domain;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.xwork.StringUtils;
+
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 用戶
@@ -11,7 +15,10 @@ import org.apache.commons.lang.xwork.StringUtils;
  * @author tyg
  * 
  */
-public class User {
+public class User implements Serializable {
+	
+    private static final long serialVersionUID = 1L;
+    
 	private Long id;
 	private Department department;
 	private Set<Role> roles = new HashSet<Role>();
@@ -56,6 +63,7 @@ public class User {
 	 * @param privUrl
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean hasPrivilegeByUrl(String privUrl) {
 		// 超級管理員有所有權限
 		if (isAdmin()) {
@@ -72,13 +80,20 @@ public class User {
 			privUrl = privUrl.substring(0, privUrl.length() - 2);
 		}
 
-		// 普通用戶要判斷是否有權限
-		for (Role role : roles) {
-			for (Privilege priv : role.getPrivileges()) {
-				if (StringUtils.equals(privUrl, priv.getUrl())) {
-					return true;
+		// 如果本URL不需要控制，則用戶登入就可以使用
+		Collection<String> allPrivilegeUrls = (Collection<String>) ActionContext.getContext().getApplication().get("allPrivilegeUrls");
+		if (!allPrivilegeUrls.contains(privUrl)) {
+			return true;
+		} else {
+			// 普通用戶要判斷是否有權限
+			for (Role role : roles) {
+				for (Privilege priv : role.getPrivileges()) {
+					if (StringUtils.equals(privUrl, priv.getUrl())) {
+						return true;
+					}
 				}
 			}
+
 		}
 		return false;
 	}

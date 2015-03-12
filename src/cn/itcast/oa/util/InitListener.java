@@ -1,5 +1,6 @@
 package cn.itcast.oa.util;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.ServletContextEvent;
@@ -21,7 +22,11 @@ public class InitListener implements ServletContextListener {
 		// 準備數據：topPrivilegeList
 		List<Privilege> topPrivilegeList = privilegeService.findTopList();
 		sce.getServletContext().setAttribute("topPrivilegeList", topPrivilegeList);
-		System.out.println("已準備數據");
+		System.out.println("已準備數據topPrivilegeList");
+		// 準備數據：allPrivilegeUrls
+		Collection<String> allPrivilegeUrls = privilegeService.getAllPrivilegeUrls();
+		sce.getServletContext().setAttribute("allPrivilegeUrls", allPrivilegeUrls);
+		System.out.println("已準備數據allPrivilegeUrls");
 	}
 
 	@Override

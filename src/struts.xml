@@ -13,7 +13,23 @@
 
 
 	<package name="default" namespace="/" extends="struts-default">
-
+	
+		<interceptors>
+			<!-- 聲明攔截器 -->
+			<interceptor name="checkPrivliege" class="cn.itcast.oa.util.CheckPrivliegeInterceptor"/>
+			<!-- 重新定義默認的攔截器棧 -->
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="checkPrivliege"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 全局的Result配置 -->
+		<global-results>
+			<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+			<result name="noPrivilegeError">/noPrivilegeError.jsp</result>
+		</global-results>
+		
 		<!-- 配置測試用的Action，未與Spring整合，class屬性寫類的全名 -->
 		<!-- 當Struts2與Spring整合後，class屬性可以寫bean的名稱 -->
 		<action name="test" class="testAction">
@@ -42,7 +58,6 @@
 			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
 			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
 			<result name="toList" type="redirectAction">user_list</result>
-			<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
 			<result name="logout">/WEB-INF/jsp/userAction/logout.jsp</result>
 			<result name="toIndex" type="redirect">/index.jsp</result>
 		</action>
