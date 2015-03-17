@@ -11,8 +11,8 @@
 		<property name="name" />
 		<!-- roles屬性，本類與Role的多對多 -->
 		<set name="roles" table="itcast_privilege_role">
-			<key column="roleId"></key>
-			<many-to-many class="Role" column="privilegeId" />
+			<key column="privilegeId"></key>
+			<many-to-many class="Role" column="roleId" />
 		</set>
 		<!-- parent屬性，本類與Privilege（上級）的多對一 -->
 		<many-to-one name="parent" class="Privilege" column="parentId" />

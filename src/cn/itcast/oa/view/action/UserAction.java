@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -94,12 +95,13 @@ public class UserAction extends BaseAction<User> {
 		// 1.從資料庫中取出原對象
 		User user = userService.getById(model.getId());
 		// 2.設置要修改的屬性
-		user.setLoginName(model.getLoginName());
-		user.setName(model.getName());
-		user.setGender(model.getGender());
-		user.setPhoneNumber(model.getPhoneNumber());
-		user.setEmail(model.getEmail());
-		user.setDescription(model.getDescription());
+		// user.setLoginName(model.getLoginName());
+		// user.setName(model.getName());
+		// user.setGender(model.getGender());
+		// user.setPhoneNumber(model.getPhoneNumber());
+		// user.setEmail(model.getEmail());
+		// user.setDescription(model.getDescription());
+		BeanUtils.copyProperties(model, user, new String[] { "id", "department", "roles" });
 		// 設置所屬部門
 		user.setDepartment(departmentService.getById(departmentId));
 		// 設置關連崗位
