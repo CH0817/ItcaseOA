@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cn.itcast.oa.domain">
+	<class name="Topic" table="itcast_topic">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<property name="title" />
+		<property name="content" type="text" length="65536" />
+		<property name="postTime" type="timestamp" />
+		<!-- author屬性，本類與User的多對一 -->
+		<many-to-one name="author" class="cn.itcast.oa.domain.User"
+			column="authorId" />
+		<property name="ipAddr" />
+		<!-- forum屬性，本類與Forum的一對一，採用基於外鍵的多對一映射方式，本方有外鍵 -->
+		<many-to-one name="forum" class="cn.itcast.oa.domain.Forum"
+			column="forumId" />
+		<!-- replys屬性，本類與Reply的一對多 -->
+		<set name="replys">
+			<key column="topicId" />
+			<one-to-many class="cn.itcast.oa.domain.Reply" />
+		</set>
+		<property name="type" />
+		<property name="replyCount" />
+		<property name="lastUpdateTime" type="timestamp" />
+		<!-- lastReply屬性，本類與Reply的一對一，採用基於外鍵的一對一映射方式，本方有外鍵 -->
+		<many-to-one name="lastReply" class="cn.itcast.oa.domain.Reply"
+			column="lastReplyId" unique="true" />
+	</class>
+</hibernate-mapping>

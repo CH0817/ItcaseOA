@@ -1,6 +1,7 @@
 package cn.itcast.oa.domain;
 
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 板塊
@@ -8,14 +9,16 @@ import java.io.Serializable;
  * @author Rex
  *
  */
-public class Forum implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Forum {
 
 	private Long id;
 	private String name;
 	private String description;
-	private int position;// 排序用的
+	private int position;// 排序用的位置號
+	private Set<Topic> topics = new HashSet<Topic>();
+	private int topicCount; // 主題數量
+	private int articleCount; // 文章數量(主題+回覆)
+	private Topic lastTopic;// 最後發表主題
 
 	public Long getId() {
 		return id;
@@ -47,6 +50,38 @@ public class Forum implements Serializable {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+	public Set<Topic> getTopics() {
+		return topics;
+	}
+
+	public void setTopics(Set<Topic> topics) {
+		this.topics = topics;
+	}
+
+	public int getTopicCount() {
+		return topicCount;
+	}
+
+	public void setTopicCount(int topicCount) {
+		this.topicCount = topicCount;
+	}
+
+	public int getArticleCount() {
+		return articleCount;
+	}
+
+	public void setArticleCount(int articleCount) {
+		this.articleCount = articleCount;
+	}
+
+	public Topic getLastTopic() {
+		return lastTopic;
+	}
+
+	public void setLastTopic(Topic lastTopic) {
+		this.lastTopic = lastTopic;
 	}
 
 }

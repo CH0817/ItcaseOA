@@ -10,5 +10,15 @@
 		<property name="name" />
 		<property name="description" />
 		<property name="position" />
+		<!-- topics屬性，本類與Topic的一對多 -->
+		<set name="topics">
+			<key column="forumId" />
+			<one-to-many class="cn.itcast.oa.domain.Topic" />
+		</set>
+		<property name="topicCount" />
+		<property name="articleCount" />
+		<!-- lastTopic屬性，本類與Topic的一對一，採用基於外鍵的一對一映射方式，本方有外鍵 -->
+		<many-to-one name="lastTopic" class="cn.itcast.oa.domain.Topic"
+			column="lastTopicId" unique="true" />
 	</class>
 </hibernate-mapping>
