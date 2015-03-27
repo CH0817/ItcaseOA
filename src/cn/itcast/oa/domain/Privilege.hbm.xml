@@ -17,7 +17,7 @@
 		<!-- parent屬性，本類與Privilege（上級）的多對一 -->
 		<many-to-one name="parent" class="Privilege" column="parentId" />
 		<!-- children屬性，本類與Privilege（下級）的一對多 -->
-		<set name="children" lazy="false">
+		<set name="children" lazy="false" order-by="id ASC">
 			<key column="parentId"></key>
 			<one-to-many class="Privilege" />
 		</set>
